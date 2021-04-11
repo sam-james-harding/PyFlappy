@@ -1,5 +1,6 @@
 # basic setup
 import pygame, random, sys, time
+import os; work_dir = os.path.dirname(__file__) + '/'
 pygame.init()
 pygame.font.init()
 clock = pygame.time.Clock()
@@ -14,18 +15,18 @@ modeno = 2
 screen = pygame.display.set_mode((500, 400))
 pygame.display.set_caption('PyFlappy')
 # image setup
-birdsurf = pygame.transform.scale(pygame.image.load('resources/bird.png').convert_alpha(), (54, 41))
-background_image = pygame.image.load('resources/background.png').convert_alpha()
-title_image = pygame.image.load('resources/title.png').convert_alpha()
-uparrow = pygame.image.load('resources/arrowup.png').convert_alpha()
-downarrow = pygame.image.load('resources/arrowdown.png').convert_alpha()
+birdsurf = pygame.transform.scale(pygame.image.load(work_dir+'resources/bird.png').convert_alpha(), (54, 41))
+background_image = pygame.image.load(work_dir+'resources/background.png').convert_alpha()
+title_image = pygame.image.load(work_dir+'resources/title.png').convert_alpha()
+uparrow = pygame.image.load(work_dir+'resources/arrowup.png').convert_alpha()
+downarrow = pygame.image.load(work_dir+'resources/arrowdown.png').convert_alpha()
 # text setup
 myfont = pygame.font.SysFont('Ayuthaya', 30)
 start_text = myfont.render('START', False, (255,255,255))
 quit_text = myfont.render('QUIT', False, (255,255,255))
 # sound setup
-ding = pygame.mixer.Sound('resources/ding.wav')
-splat = pygame.mixer.Sound('resources/splat.wav')
+ding = pygame.mixer.Sound(work_dir+'resources/ding.wav')
+splat = pygame.mixer.Sound(work_dir+'resources/splat.wav')
 # rects
 startbutton = pygame.Rect(160, 130, 180, 60)
 quitbutton = pygame.Rect(160, 210, 180, 60)
@@ -34,7 +35,7 @@ birdrect = birdsurf.get_rect()
 
 while True:
         # menu loop
-        pygame.mixer.music.load('resources/menutrack.mp3')
+        pygame.mixer.music.load(work_dir+'resources/menutrack.mp3')
         pygame.mixer.music.play(-1)
         while not started:
                 #event queue
@@ -49,7 +50,7 @@ while True:
                                 if startbutton.collidepoint(a, b):
                                         started = True
                                         pygame.mixer.music.stop()
-                                        pygame.mixer.music.load('resources/theme.mp3')
+                                        pygame.mixer.music.load(work_dir+'resources/theme.mp3')
                                         pygame.mixer.music.play(-1)
                                 # starts music, plays infinitely
                         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -74,15 +75,15 @@ while True:
                 screen.blit(quit_text, (210,220))
                 # highscore data retrieval
                 if modeno == 1:
-                        highscore_file = open('data/slowscore.txt', 'r')
+                        highscore_file = open(work_dir+'data/slowscore.txt', 'r')
                         scored = highscore_file.read()
                         highscore_file.close()
                 if modeno == 2:
-                        highscore_file = open('data/normscore.txt', 'r')
+                        highscore_file = open(work_dir+'data/normscore.txt', 'r')
                         scored = highscore_file.read()
                         highscore_file.close()
                 if modeno == 3:
-                        highscore_file = open('data/fastscore.txt', 'r')
+                        highscore_file = open(work_dir+'data/fastscore.txt', 'r')
                         scored = highscore_file.read()
                         highscore_file.close()
                 highscore = 'Highscore: ' + str(scored)
@@ -188,12 +189,12 @@ while True:
                         pygame.mixer.music.stop()
                         splat.play()
                         # opens highscore file, and adds high score as variable top_score
-                        highscore_file = open('data/'+['slow', 'norm', 'fast'][modeno-1]+'score.txt', 'r')
+                        highscore_file = open(work_dir+'data/'+['slow', 'norm', 'fast'][modeno-1]+'score.txt', 'r')
                         top_score = highscore_file.read()
                         highscore_file.close()
                         if int(top_score) < int(score):
                                 # top_score is checked against current finished score to see if high score should be changed, and doing so if necessary
-                                highscore_edit_file = open('data/'+['slow', 'norm', 'fast'][modeno-1]+'score.txt', 'w')
+                                highscore_edit_file = open(work_dir+'data/'+['slow', 'norm', 'fast'][modeno-1]+'score.txt', 'w')
                                 highscore_edit_file.write(str(score))
                                 highscore_edit_file.close()
 

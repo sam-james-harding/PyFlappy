@@ -314,8 +314,8 @@ class Game(Screen):
         bird.rect.x = 100
         bird.rect.y = 100
 
-        self.pipeVerticalGap = 90
-        self.pipeHorizontalGap = 300
+        self.pipeVerticalGap = 100
+        self.pipeHorizontalGap = 400
         self.minPipeHeight = 100
         self.pipeSpeed = 9
         self.pipeWidth = 100
